@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Our Website</title>
+    <link rel="stylesheet" href="Form.css">
+</head>
+<body>
+
+    <form>
+        <label for="dayNightToggle">Day/Night Mode:</label>
+        <button class="day-night-toggle" id="dayNightToggle">Day</button>
+    </form>
+
+    <form class="survey-form" id="survey-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br><br>
+      
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required><br><br>
+      
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required><br><br>
+      
+      <label for="comment">Comments:</label>
+      <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br><br>
+      
+      <input type="submit" value="Submit">
+    </form>
+
+
+    <div class="checkEvenOrOdd" id="checkEvenOrOdd">
+      <h1>Even or Odd Checker</h1>
+      <p>Enter a number:</p>
+      <input type="text" id="numberInput">
+      <button onclick="checkEvenOrOdd()" style="margin-top: 10px;">Check</button>
+      <p id="result"></p>
+  </div>
+
+  <script>
+      function checkEvenOrOdd() {
+        const numberInput = document.getElementById("numberInput").value;
+        const resultElement = document.getElementById("result");
+  
+        if (isNaN(parseInt(numberInput))) {
+          resultElement.textContent = "Please enter a valid number.";
+        } else {
+          const number = parseInt(numberInput);
+          if (number % 2 === 0) {
+            resultElement.textContent = `${number} is even.`;
+          } else {
+            resultElement.textContent = `${number} is odd.`;
+          }
+        }
+      }
+    </script>
+
+    <div class="guessNumber" id="guessNumber">
+      <h1>Number Guessing Game</h1>
+      <p>Guess a number between 1 and 10:</p>
+      <input type="text" id="guessInput">
+      <button onclick="guessNumber()">Guess</button>
+      <p id="feedback"></p>
+    </div>
+
+    <script>
+      const secretNumber = Math.floor(Math.random() * 10) + 1;
+      let remainingGuesses = 3;
+  
+      function guessNumber() {
+        const guessInput = document.getElementById("guessInput").value;
+        const feedbackElement = document.getElementById("feedback");
+  
+        if (isNaN(parseInt(guessInput))) {
+          feedbackElement.textContent = "Please enter a valid number.";
+        } else {
+          const guess = parseInt(guessInput);
+          remainingGuesses--;
+          if (guess === secretNumber) {
+            feedbackElement.textContent = "Congratulations! You guessed the correct number.";
+          } else if (guess < secretNumber) {
+            feedbackElement.textContent = `Too low. ${remainingGuesses} guess remaining.`;
+          } else {
+            feedbackElement.textContent = `Too high. ${remainingGuesses} guess remaining.`;
+          }
+  
+          if (remainingGuesses === 0) {
+            feedbackElement.textContent = `You're out of guesses. The correct number was ${secretNumber}.`;
+            document.getElementById("guessInput").disabled = true;
+            document.querySelector("button").disabled = true;
+          }
+        }
+      }
+    </script>
+
+    <div class="fruits" id="fruits">
+      <h1>Favorite Fruits List</h1>
+      <p>Enter your favorite fruits (comma-separated) and click the button:</p>
+      <input type="text" id="fruitsInput">
+      <button onclick="displayFruits()">Show Favorite Fruits</button>
+      <ul id="fruitsList"></ul>
+    </div>
+
+    <script>
+      function displayFruits() {
+        const fruitsInput = document.getElementById("fruitsInput").value;
+        const fruitsList = document.getElementById("fruitsList");
+  
+        // Split the input into an array of fruits, assuming they are comma-separated.
+        const favoriteFruits = fruitsInput.split(",").map(fruit => fruit.trim());
+  
+        console.log(favoriteFruits.length);
+        if (favoriteFruits.length-1 === 0) {
+          fruitsList.innerHTML = "Please enter your favorite fruits.";
+        } else {
+          fruitsList.innerHTML = ""; // Clear previous list.
+          const orderedList = document.createElement('ol');
+          for (let i = 0; i < favoriteFruits.length; i++) {
+            const listItem = document.createElement("li");
+            listItem.textContent = favoriteFruits[i];
+            orderedList.appendChild(listItem);
+          }
+          fruitsList.appendChild(orderedList);
+        }
+      }
+    </script>
+
+    <div class="toggle" id="toggle">
+        <button id="toggle-button">Toggle Text</button>
+        <p id="hidden-paragraph" style="display: none">This is the hidden text.</p>
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('toggle-button');
+        const hiddenParagraph = document.getElementById('hidden-paragraph');
+
+        toggleButton.addEventListener('click', function () {
+            if (hiddenParagraph.style.display === 'none') {
+                hiddenParagraph.style.display = 'block';
+            } else {
+                hiddenParagraph.style.display = 'none';
+            }
+        });
+    </script>
+
+    <div class="image-gallery" id="imageGallary">
+        <img src="image1.jpg" style="max-height: 100%; max-width: 100%;" alt="Image1.jpg">
+        <button id="prev-button">Previous</button>
+        <button id="next-button">Next</button>
+    </div>
+
+    <script>
+        const images = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"];
+        let currentImageIndex = 0;
+
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const imageElement = document.querySelector('.image-gallery img');
+
+        function showImage(index) {
+            imageElement.src = images[index];
+        }
+
+        prevButton.addEventListener('click', function () {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            showImage(currentImageIndex);
+        });
+
+        nextButton.addEventListener('click', function () {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage(currentImageIndex);
+        });
+
+        showImage(currentImageIndex);
+    </script>
+
+
+    <div class="colorSelect" id="colorSelect">
+        <select id="color-select">
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+        </select>
+        <div id="color-div" style="background-color: red; border-radius: 3px; width: 60%; margin: 10px auto;">This div will change color.</div>
+    </div>
+
+    <script>
+        const colorSelect = document.getElementById('color-select');
+        const colorDiv = document.getElementById('color-div');
+
+        colorSelect.addEventListener('change', function () {
+            const selectedColor = colorSelect.value;
+            colorDiv.style.backgroundColor = selectedColor;
+        });
+    </script>
+
+    <script>
+      const toggleButton_ = document.getElementById('dayNightToggle');
+      const survey = document.getElementById("survey-form");
+      const EvenOrOdd = document.getElementById("checkEvenOrOdd");
+      const color = document.getElementById("colorSelect");
+      const imageGallary = document.getElementById("imageGallary");
+      const toggle = document.getElementById("toggle");
+      const fruits = document.getElementById("fruits");
+      const guessNum = document.getElementById("guessNumber");
+      // Function to toggle between day and night mode
+      function toggleDayNight(event) {
+          event.preventDefault();
+          if (survey.classList.contains("night-mode")) {
+            survey.classList.remove("night-mode");
+            EvenOrOdd.classList.remove("night-mode");
+            color.classList.remove("night-mode");
+            imageGallary.classList.remove("night-mode");
+            toggle.classList.remove("night-mode");
+            fruits.classList.remove("night-mode");
+            guessNum.classList.remove("night-mode");
+              toggleButton_.textContent = 'Day';
+          } else {
+              survey.classList.add("night-mode");
+              EvenOrOdd.classList.add("night-mode");
+              color.classList.add("night-mode");
+              imageGallary.classList.add("night-mode");
+              toggle.classList.add("night-mode");
+              fruits.classList.add("night-mode");
+              guessNum.classList.add("night-mode");
+              toggleButton_.textContent = 'Night';
+          }
+      }
+      // Add an event listener to the button
+      toggleButton_.addEventListener('click', toggleDayNight);  
+    </script>
+</body>
+</html>
